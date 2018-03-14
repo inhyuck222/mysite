@@ -11,7 +11,7 @@ import com.cafe24.mvc.util.WebUtil;
 import com.cafe24.mysite.dao.GuestbookDao;
 import com.cafe24.mysite.vo.GuestbookVo;
 
-public class AddAction implements Action {
+public class InsertAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

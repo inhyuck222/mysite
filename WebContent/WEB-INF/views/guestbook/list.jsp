@@ -17,7 +17,7 @@
 		<jsp:include page="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="guestbook">
-				<form action="/mysite/guestbook?a=add" method="post">
+				<form action="/mysite/guestbook" method="post">
 					<input type="hidden" name="a" value="insert">
 					<table>
 						<tr>
