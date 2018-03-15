@@ -14,6 +14,18 @@ public class UserActionFactory extends AbstractActionFactory {
 			action = new JoinFormAction();
 		} else if ("loginform".equals(actionName)) {
 			action = new LoginFormAction();
+		} else if ("joinsuccess".equals(actionName)) {
+			action = new JoinSuccessAction();
+		} else if ("join".equals(actionName)) {
+			action = new JoinAction();
+		} else if ("login".equals(actionName)) {
+			action = new LoginAction();
+		} else if ("logout".equals(actionName)) {
+			action = new LogoutActiion();
+		} else if ("modifyform".equals(actionName)) {
+			action = new ModifyFormActiion();
+		} else if ("modify".equals(actionName)){
+			action = new ModifyActiion();
 		} else {
 			action = new IndexAction();
 		}

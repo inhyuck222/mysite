@@ -9,6 +9,18 @@ import javax.servlet.http.HttpServletResponse;
 
 public class WebUtil {
 	
+	public static int checkParameter(String value, int defaultValue) {
+		return defaultValue;
+	}
+	
+	public static long checkParameter(String value, long defaultValue) {
+		return defaultValue;
+	}
+	
+	public static String checkParameter(String value, String defaultValue) {
+		return defaultValue;
+	}
+	
 	public static void redirect(HttpServletRequest request, HttpServletResponse response, String url) throws ServletException, IOException {
 		response.sendRedirect(url);
 	}

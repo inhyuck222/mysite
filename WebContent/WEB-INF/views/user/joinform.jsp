@@ -1,5 +1,8 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!doctype html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <title>mysite</title>
@@ -8,11 +11,13 @@
 </head>
 <body>
 	<div id="container">
-		<jsp:include page="/WEB-INF/views/includes/header.jsp"/>
+		<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 		<div id="content">
 			<div id="user">
 
-				<form id="join-form" name="joinForm" method="" action="">
+				<form id="join-form" name="joinForm" method="post" action="/mysite/user">
+					<input type="hidden" name="a" value="join"/>
+					
 					<label class="block-label" for="name">이름</label>
 					<input id="name" name="name" type="text" value="">
 
@@ -40,8 +45,8 @@
 				</form>
 			</div>
 		</div>
-		<jsp:include page="/WEB-INF/views/includes/navigation.jsp"/>
-		<jsp:include page="/WEB-INF/views/includes/footer.jsp"/>
+		<c:import url="/WEB-INF/views/includes/navigation.jsp"/>
+		<c:import url="/WEB-INF/views/includes/footer.jsp"/>
 	</div>
 </body>
 </html>

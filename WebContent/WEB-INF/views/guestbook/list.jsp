@@ -1,10 +1,11 @@
-<%@page import="com.cafe24.mysite.vo.GuestbookVo"%>
-<%@page import="java.util.List"%>
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
-	List<GuestbookVo> list = (List<GuestbookVo>) request.getAttribute("list");
+	pageContext.setAttribute("newLine", "\n");
 %>
-<!doctype html>
 <html>
 <head>
 <title>mysite</title>
@@ -14,7 +15,7 @@
 </head>
 <body>
 	<div id="container">
-		<jsp:include page="/WEB-INF/views/includes/header.jsp" />
+		<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 		<div id="content">
 			<div id="guestbook">
 				<form action="/mysite/guestbook" method="post">
@@ -34,34 +35,30 @@
 						</tr>
 					</table>
 				</form>
+				<c:set var="count" value="${fn:length(list) }"/>
+				<c:forEach items="${list }" var="vo" varStatus="status">
 				<ul>
 					<li>
-					<%
-						int count = 1;
-						for (GuestbookVo vo : list) {
-							String content = vo.getContent();
-							content = content.replaceAll("\r\n", "<br/>");
-					%>
 						<table>
 							<tr>
-								<td><%=count %></td>
-								<td><%=vo.getName() %></td>
-								<td><%=vo.getRegDate() %></td>
-								<td><a href="/mysite/guestbook?a=deleteform&no=<%=vo.getNo() %>">삭제</a></td>
+								<td>[${count - status.index }]</td>
+								<td>${vo.name }</td>
+								<td>${vo.regDate }</td>
+								<td><a href="/mysite/guestbook?a=deleteform&no=${vo.no }">삭제</a></td>
 							</tr>
 							<tr>
-								<td colspan=4><%=vo.getContent() %></td>
+								<td colspan=4>${fn:replace(vo.content, newLine, "<br>") }</td>
 							</tr>
-						</table> <br> 
-					<%
- 						}
- 					%>
+						</table> <br>					
 					</li>
 				</ul>
+				</c:forEach>
 			</div>
 		</div>
-		<jsp:include page="/WEB-INF/views/includes/navigation.jsp" />
-		<jsp:include page="/WEB-INF/views/includes/footer.jsp" />
+		<c:import url="/WEB-INF/views/includes/navigation.jsp">
+			<c:param name="menu" value="guestbook"/>
+		</c:import>
+		<c:import url="/WEB-INF/views/includes/footer.jsp"/>
 	</div>
 </body>
 </html>
