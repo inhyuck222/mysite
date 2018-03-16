@@ -16,6 +16,11 @@ public class ModifyFormActiion implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		if(session == null) {
+			WebUtil.forward(request, response, "/WEB-INF/views/user/loginform.jsp");
+			return;
+		}
+		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		if(authUser == null) {
 			WebUtil.forward(request, response, "/WEB-INF/views/user/loginform.jsp");

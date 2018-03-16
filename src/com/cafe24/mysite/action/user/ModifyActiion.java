@@ -24,7 +24,16 @@ public class ModifyActiion implements Action {
 		
 		/* 인증처리 (Session 처리) */
 		HttpSession session = request.getSession();
+		if(session == null) {
+			WebUtil.forward(request, response, "/WEB-INF/views/user/loginform.jsp");
+			return;
+		}
+		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		if(authUser == null) {
+			WebUtil.forward(request, response, "/WEB-INF/views/user/loginform.jsp");
+			return;
+		}
 		
 		// 유저가 있는지 확인
 		UserVo userCheckVo = new UserDao().get(authUser.getEmail(), originPassword);

@@ -1,11 +1,11 @@
 package com.cafe24.mysite.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.cafe24.mvc.util.DBUtil;
 import com.cafe24.mysite.vo.UserVo;
 
 public class UserDao {
@@ -16,7 +16,7 @@ public class UserDao {
 		PreparedStatement pstmt = null;
 
 		try {
-			conn = getConnection();
+			conn = DBUtil.getConnection();
 			
 			String sql = 
 					"update users set name=?, gender=?, password=password(?) where no=?;";			
@@ -55,7 +55,7 @@ public class UserDao {
 		ResultSet rs = null;
 
 		try {
-			conn = getConnection();
+			conn = DBUtil.getConnection();
 			
 			String sql = 
 					" select " + 
@@ -107,7 +107,7 @@ public class UserDao {
 		PreparedStatement pstmt = null;
 
 		try {
-			conn = getConnection();
+			conn = DBUtil.getConnection();
 			
 			String sql = 
 					"insert into users values(null, ?, ?, password(?), ?, now())";			
@@ -137,21 +137,5 @@ public class UserDao {
 		}
 
 		return result;
-	}
-
-	private Connection getConnection() throws SQLException {
-		Connection conn = null;
-		try {
-			// 1. 드라이버 로딩
-			Class.forName("com.mysql.jdbc.Driver");
-
-			// 2. 연결하기
-			String url = "jdbc:mysql://localhost/webdb";
-			conn = DriverManager.getConnection(url, "webdb", "webdb");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		return conn;
 	}
 }

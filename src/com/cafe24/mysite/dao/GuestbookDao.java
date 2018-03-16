@@ -1,13 +1,13 @@
 package com.cafe24.mysite.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cafe24.mvc.util.DBUtil;
 import com.cafe24.mysite.vo.GuestbookVo;
 
 public class GuestbookDao {
@@ -18,7 +18,7 @@ public class GuestbookDao {
 		PreparedStatement pstmt = null;
 		
 		try {
-			conn = getConnection();
+			conn = DBUtil.getConnection();
 			
 			String sql = 
 					" delete " + 
@@ -57,7 +57,7 @@ public class GuestbookDao {
 		PreparedStatement pstmt = null;
 		
 		try {
-			conn = getConnection();
+			conn = DBUtil.getConnection();
 			
 			String sql = 
 					" insert " + 
@@ -97,7 +97,7 @@ public class GuestbookDao {
 		ResultSet rs = null;
 		
 		try {
-			conn = getConnection();
+			conn = DBUtil.getConnection();
 			
 			String sql = 
 					" select no, " + 
@@ -147,21 +147,5 @@ public class GuestbookDao {
 		}
 		
 		return list;
-	}
-	
-	private Connection getConnection() throws SQLException {
-		Connection conn = null;
-		try {
-			// 1. 드라이버 로딩
-			Class.forName("com.mysql.jdbc.Driver");
-
-			// 2. 연결하기
-			String url = "jdbc:mysql://localhost/webdb";
-			conn = DriverManager.getConnection(url, "webdb", "webdb");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		return conn;
 	}
 }
