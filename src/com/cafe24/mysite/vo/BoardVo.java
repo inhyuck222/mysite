@@ -11,6 +11,15 @@ public class BoardVo {
 	private String userName;
 	private String regDate;
 	private Long hit;
+	private boolean deleted;
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 
 	public Long getNo() {
 		return no;
@@ -95,7 +104,10 @@ public class BoardVo {
 	@Override
 	public String toString() {
 		return "BoardVo [no=" + no + ", title=" + title + ", content=" + content + ", groupNo=" + groupNo + ", orderNo="
-				+ orderNo + ", depth=" + depth + ", userNo=" + userNo + ", regDate=" + regDate + ", hit=" + hit + "]";
+				+ orderNo + ", depth=" + depth + ", userNo=" + userNo + ", userName=" + userName + ", regDate="
+				+ regDate + ", hit=" + hit + ", isDeleted=" + deleted + "]";
 	}
+
+	
 
 }

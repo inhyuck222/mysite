@@ -37,12 +37,7 @@ public class GuestbookDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (conn != null && conn.isClosed() == false) {
-					conn.close();
-				}
-				if (pstmt != null && pstmt.isClosed() == false) {
-					pstmt.close();
-				}
+				DBUtil.close(conn, pstmt);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -76,12 +71,7 @@ public class GuestbookDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (conn != null && conn.isClosed() == false) {
-					conn.close();
-				}
-				if (pstmt != null && pstmt.isClosed() == false) {
-					pstmt.close();
-				}
+				DBUtil.close(conn, pstmt);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -132,15 +122,7 @@ public class GuestbookDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (conn != null && conn.isClosed() == false) {
-					conn.close();
-				}
-				if (pstmt != null && pstmt.isClosed() == false) {
-					pstmt.close();
-				}
-				if (rs != null && rs.isClosed() == false) {
-					rs.close();
-				}
+				DBUtil.close(conn, pstmt, rs);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

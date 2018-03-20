@@ -14,8 +14,16 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="" method="post">
-					<input type="text" id="kwd" name="kwd" value="">
+				<form id="search_form" action="/mysite/board" method="post">
+					<c:choose>
+						<c:when test="${empty kwd }">
+							<input type="text" id="kwd" name="kwd" value="">		
+						</c:when>
+						<c:otherwise>
+							<input type="text" id="kwd" name="kwd" value="${kwd }">
+						</c:otherwise>
+					</c:choose>
+					
 					<input type="submit" value="찾기">
 				</form>
 				<table class="tbl-ex">
@@ -32,39 +40,67 @@
 					<c:forEach items="${list }" var="vo" varStatus="status">
 						<tr>
 							<td>[${count - status.index }]</td>
-							<td style="text-align:left"><a href="">${vo.title }</a></td>							
+							<c:choose>
+								<c:when test="${vo.depth > 0 }">
+									<c:if test="${vo.deleted eq true}">
+										<td style="text-align:left; padding-left:${vo.depth * 20}px">
+											<img src="/mysite/assets/images/reply.png"/>
+											삭제된 글입니다.
+										</td>									
+									</c:if>
+									<c:if test="${vo.deleted eq false}">
+										<td style="text-align:left; padding-left:${vo.depth * 20}px">
+											<img src="/mysite/assets/images/reply.png"/>
+											<a href="/mysite/board?a=view&boardNo=${vo.no }">${vo.title }</a>
+										</td>
+									</c:if>						
+								</c:when>
+								<c:when test="${vo.depth == 0 }">
+									<c:if test="${vo.deleted eq true}">
+										<td style="text-align:left">
+											삭제된 글입니다.
+										</td>									
+									</c:if>
+									<c:if test="${vo.deleted eq false}">
+										<td style="text-align:left">
+											<a href="/mysite/board?a=view&boardNo=${vo.no }">${vo.title }</a>
+										</td>
+									</c:if>		
+								</c:when>
+							</c:choose>
 							<td>${vo.userName }</td>
 							<td>${vo.hit }</td>
 							<td>${vo.regDate }</td>
 							<c:if test="${sessionScope.authUser.no == vo.userNo }">
-								<td><a href="" class="del">삭제</a></td>
+								<td><a href="/mysite/board?a=delete&no=${vo.no }" class="del">삭제</a></td>
 							</c:if>
 						</tr>
-					</c:forEach>
-					
-					<!-- tr>
-						<td>2</td>
-						<td style="text-align:left; padding-left:20px">
-							<img src="/mysite/assets/images/reply.png"/>
-							<a href="">두 번째 글입니다.</a>
-						</td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-10-02 12:04:12</td>
-						<td><a href="" class="del">삭제</a></td>
-					</tr-->
+					</c:forEach>					
 				</table>
-				<div class="pager">
-					<ul>
-						<li><a href="">◀</a></li>
-						<li><a href="">1</a></li>
-						<li><a href="">2</a></li>
-						<li class="selected">3</li>
-						<li><a href="">4</a></li>
-						<li>5</li>
-						<li><a href="">▶</a></li>
-					</ul>
-				</div>
+				<c:if test="${totalCount != 0 }">
+					<div class="pager">
+						<c:set var="pageCount" value="${fn:length(pages) }"/>
+						<c:set var="endPageNum" value="${endPage }"/>
+						<c:set var="recentPageNum" value="${recentPage }"/>
+						<ul>
+							<li><a href="/mysite/board?a=list&page=${recentPageNum - 2 }">◀</a></li>
+							<c:forEach items="${pages }" var="page" varStatus="status">
+								<c:choose>
+									<c:when test="${ page eq recentPageNum }">
+										<li class="selected">${page }</li>
+									</c:when>
+									<c:when test="${page gt endPageNum }">
+										<li>${page }</li>
+									</c:when>
+									<c:otherwise>
+										<li><a href="/mysite/board?a=list&page=${page }&kwd=${kwd }">${page }</a></li>
+									</c:otherwise>
+								</c:choose>							
+							</c:forEach>
+							<li><a href="/mysite/board?a=list&page=${recentPageNum + 2 }">▶</a></li>
+						</ul>
+					</div>
+				</c:if>
 				
 				<c:if test="${not empty sessionScope.authUser }">
 					<div class="bottom">

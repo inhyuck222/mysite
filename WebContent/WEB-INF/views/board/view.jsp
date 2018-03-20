@@ -3,6 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+	pageContext.setAttribute("newLine", "\n");
+%>
 <html>
 <head>
 <title>mysite</title>
@@ -20,22 +23,32 @@
 					</tr>
 					<tr>
 						<td class="label">제목</td>
-						<td>제목입니다.</td>
+						<td>${requestScope.board.title }</td>
 					</tr>
 					<tr>
 						<td class="label">내용</td>
 						<td>
 							<div class="view-content">
-								내용 1입니다.<br>
-								내용 2입니다.<br>
-								내용 3입니다.
+								${fn:replace(requestScope.board.content, newLine, "<br>") }
 							</div>
 						</td>
 					</tr>
 				</table>
 				<div class="bottom">
-					<a href="">글목록</a>
-					<a href="">글수정</a>
+					<a href="/mysite/board?a=list">글목록</a>
+					<c:if test="${sessionScope.authUser.no == requestScope.board.userNo }">
+						<a href="/mysite/board?a=modifyform&boardNo=${requestScope.board.no }">글수정</a>
+					</c:if>
+					<c:if test="${not empty sessionScope.authUser }">
+						<form id="search_form" action="/mysite/board" method="post">
+							<input type = "hidden" name = "a" value="repostwriteform">
+							<input type = "hidden" name = "no" value="${requestScope.board.no }">
+							<input type = "hidden" name = "groupNo" value="${requestScope.board.groupNo }">
+							<input type = "hidden" name = "orderNo" value="${requestScope.board.orderNo }">
+							<input type = "hidden" name = "depth" value="${requestScope.board.depth }">
+							<input type="submit" value="답글">
+						</form>
+					</c:if>
 				</div>
 			</div>
 		</div>

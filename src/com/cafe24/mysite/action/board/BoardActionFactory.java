@@ -12,15 +12,27 @@ public class BoardActionFactory extends AbstractActionFactory {
 		if(actionName == null) {
 			actionName = "";
 		}
-		/*
-		 * g_no(2) = 유지 => 2
-		 * o_no(1) = o_no(1) + 1 => 2
-		 * d(0) = d + 1 => 1
-		 * update o_no = o_no+1 where g_no = 2 and o_no >= 2
-		 * insert (~~~~)
-		 */
+		
 		switch(actionName) {
-		case "newpostwrite" : 
+		case "delete" :
+			action = new DeleteAction();
+			break;
+		case "repostwrite" : 
+			action = new RepostWriteAction();
+			break;
+		case "repostwriteform" : 
+			action = new RepostWriteFormAction();
+			break;
+		case "modify" : 
+			action = new ModifyAction();
+			break;
+		case "modifyform" :
+			action = new ModifyFormAction();
+			break;
+		case "view" :
+			action = new ViewAction();
+			break;
+		case "newpostwrite" :
 			action = new NewPostWriteAction();
 			break;
 		case "newpostwriteform" :
